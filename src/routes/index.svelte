@@ -1,18 +1,23 @@
-<script>
-    let count = 0;
-
-    function incrementBtn() {
-        count += 1;
+<script context="module">
+    export async function load({fetch}){
+        const res = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${import.meta.env.VITA_API}&language=en-US&page=1`);
+        const data = await res.json();
+        if(res.ok){
+            return {
+                props: { popular: data.results}
+            }
+        }
     }
 </script>
 
-<h1>Number: {count}</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script>
+    import PopularMovies from "../components/PopularMovies.svelte";
+    import SearchMovies from "../components/SearchMovies.svelte";
+    export let popular;
+    console.log(popular);
+</script>
 
-<a href="/about">hihi</a>
-<button on:click={incrementBtn}>Increment</button>
-<style>
-    p {
-        font-size: 2rem;
-    }
-</style>
+<section>
+    <SearchMovies />
+    <PopularMovies popular={popular} />
+</section>
