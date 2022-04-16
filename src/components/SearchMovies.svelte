@@ -21,6 +21,7 @@
         bind:value = {inputValue}
         name="search_movie"
         type="text"
+        class={ active ? 'selected': '' }
     />
     {#if inputValue}
         <button>Search</button>
